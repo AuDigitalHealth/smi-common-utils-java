@@ -1,20 +1,20 @@
 package au.gov.nehta.common.utils;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Singleton class that formats information in a standard and consistent way.
  */
 public final class StandardFormatter {
 
-    /*
-     * Singleton instance.
-     */
     private static final StandardFormatter INSTANCE = new StandardFormatter();
 
-    private static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss.SSSZ";
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter
+            .ofPattern("yyyy-MM-dd HH:mm:ss.SSSZ", Locale.ROOT);
 
     private static final String UNKNOWN_DATE = "<UnknownDate>";
 
@@ -31,9 +31,6 @@ public final class StandardFormatter {
         return INSTANCE;
     }
 
-    /*
-     * Private constructor to prevent instantiation.
-     */
     private StandardFormatter() {
     }
 
@@ -51,16 +48,15 @@ public final class StandardFormatter {
      * Formats a date-time, e.g. 2008-12-30 12:45:00.000+1000.
      *
      * @param date date object
-     * @return formatted string representing date-time or an empty string if date
-     * is null
+     * @return formatted string representing date-time or {@code <UnknownDate>} if
+     * date is null
      */
     public String formatDateTime(Date date) {
-        String formattedStr = UNKNOWN_DATE;
-        if (date != null) {
-            DateFormat formatter = new SimpleDateFormat(DATE_TIME_FORMAT);
-            formattedStr = formatter.format(date);
+        if (date == null) {
+            return UNKNOWN_DATE;
         }
-        return formattedStr;
+        return DATE_TIME_FORMATTER.format(
+                Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()));
     }
 
     /**
@@ -71,18 +67,12 @@ public final class StandardFormatter {
      * @return formatted string representing the code location
      */
     public String formatLocation(String className, String methodName) {
-        // Class name
-        String classNameStr = className;
-        if (ArgumentUtils.isNullOrBlank(className)) {
-            classNameStr = UNKNOWN_CLASS;
-        }
-
-        // Method name
-        String methodNameStr = methodName;
-        if (ArgumentUtils.isNullOrBlank(methodName)) {
-            methodNameStr = UNKNOWN_METHOD;
-        }
-
+        String classNameStr = ArgumentUtils.isNullOrBlank(className)
+                ? UNKNOWN_CLASS
+                : className;
+        String methodNameStr = ArgumentUtils.isNullOrBlank(methodName)
+                ? UNKNOWN_METHOD
+                : methodName;
         return String.format("%s.%s()", classNameStr, methodNameStr);
     }
 }

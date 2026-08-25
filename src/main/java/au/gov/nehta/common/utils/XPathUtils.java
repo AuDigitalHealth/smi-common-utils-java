@@ -56,7 +56,7 @@ public final class XPathUtils {
                                  Map<String, String> namespaceMap, Class<T> expectedType)
             throws XPathExpressionException {
         assert (xpath != null) : "'xpath' is null.";
-        assert (xpath.trim().length() > 0) : "'xpath' is a blank string.";
+        assert (!xpath.trim().isEmpty()) : "'xpath' is a blank string.";
         assert (contextNode != null) : "'contextNode' is null.";
         assert (expectedType != null) : "'expectedType' is null.";
 
@@ -101,7 +101,7 @@ public final class XPathUtils {
                                   Map<String, String> namespaceMap, QName returnType)
             throws XPathExpressionException {
         assert (xpath != null) : "'xpath' is null.";
-        assert (xpath.trim().length() > 0) : "'xpath' is a blank string.";
+        assert (!xpath.trim().isEmpty()) : "'xpath' is a blank string.";
         assert (contextNode != null) : "'contextNode' is null.";
         assert (returnType != null) : "'returnType' is null.";
 
@@ -132,7 +132,7 @@ public final class XPathUtils {
     public static int getCount(String xpath, Node contextNode,
                                Map<String, String> namespaceMap) throws XPathExpressionException {
         assert (xpath != null) : "'xpath' is null.";
-        assert (xpath.trim().length() > 0) : "'xpath' is a blank string.";
+        assert (!xpath.trim().isEmpty()) : "'xpath' is a blank string.";
         assert (contextNode != null) : "'contextNode' is null.";
 
         Double doubleCount = evaluate("count(" + xpath + ")", contextNode,
@@ -154,7 +154,7 @@ public final class XPathUtils {
     public static List<Element> getElementList(String xpath, Node contextNode,
                                                Map<String, String> namespaceMap) throws XPathExpressionException {
         assert (xpath != null) : "'xpath' is null.";
-        assert (xpath.trim().length() > 0) : "'xpath' is a blank string.";
+        assert (!xpath.trim().isEmpty()) : "'xpath' is a blank string.";
         assert (contextNode != null) : "'contextNode' is null.";
 
         NodeList nodeList = evaluate(xpath, contextNode, namespaceMap,
