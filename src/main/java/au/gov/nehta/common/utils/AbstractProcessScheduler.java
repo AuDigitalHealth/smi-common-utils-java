@@ -1,13 +1,12 @@
 package au.gov.nehta.common.utils;
 
+import java.util.concurrent.atomic.AtomicBoolean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This class facilitates the java process to run periodically for the specified
- * time interval. This scheduled thread can be stopped, restarted and cancelled.
- *
- * @author VinSekar
+ * Runs a subclass task periodically for a configured sleep interval. The
+ * scheduled thread can be stopped and restarted.
  */
 public abstract class AbstractProcessScheduler extends Thread {
 
@@ -15,24 +14,14 @@ public abstract class AbstractProcessScheduler extends Thread {
             .getLogger(AbstractProcessScheduler.class);
 
     /**
-     * The time interval in seconds nanoseconds
+     * Sleep interval in milliseconds between task executions.
      */
     private final int interval;
 
-    /**
-     * Flag value to stop the thread.
-     */
-    private boolean stopThread = false;
+    private final AtomicBoolean stopThread = new AtomicBoolean(false);
 
     /**
-     * The timer instance to run the scheduled task for the specified time
-     * interval.
-     */
-
-    /**
-     * Default constructor with accepts the time interval as an argument.
-     *
-     * @param interval
+     * @param interval sleep interval in milliseconds
      */
     public AbstractProcessScheduler(int interval) {
         this.interval = interval;
@@ -44,19 +33,18 @@ public abstract class AbstractProcessScheduler extends Thread {
     }
 
     /**
-     * This method runs the current thread periodically for the provided interval.
+     * Runs {@link #performThreadTask()} until {@link #stopTimerThread()} is called
+     * or the thread is interrupted.
      */
     public void runPeriodically() {
         try {
-            this.stopThread = false;
-            // This thread check for every x time interval to stop/continue the
-            // thread.
-            while (!this.stopThread) {
+            this.stopThread.set(false);
+            while (!this.stopThread.get()) {
                 Thread.sleep(this.interval);
                 performThreadTask();
             }
-
         } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
             String errMsg = "The thread running periodic task,'"
                     + this.getClass().getSimpleName()
                     + "', was interrupted while sleeping.";
@@ -65,34 +53,29 @@ public abstract class AbstractProcessScheduler extends Thread {
     }
 
     /**
-     * Implement the piece of code to be executed for the scheduled time interval.
+     * Implement the code to execute on each interval.
      */
     public abstract void performThreadTask();
 
     /**
-     * This method stops the scheduled thread. This method is thread safe.
+     * Stops the scheduled loop. Thread-safe.
      */
-    public synchronized void stopTimerThread() {
-        this.stopThread = true;
+    public void stopTimerThread() {
+        this.stopThread.set(true);
     }
 
     /**
-     * This method starts the scheduler thread. This method is thread safe.
+     * Clears the stop flag and runs the periodic loop on the calling thread.
      */
-    public synchronized void startThread() {
-        this.stopThread = false;
+    public void startThread() {
+        this.stopThread.set(false);
         runPeriodically();
     }
 
     /**
-     * This method returns true if the timer thread is running.
-     *
-     * @return true if timer thread is running
+     * @return true if the stop flag is not set
      */
     public boolean isThreadRunning() {
-        if (!this.stopThread) {
-            return true;
-        }
-        return false;
+        return !this.stopThread.get();
     }
 }

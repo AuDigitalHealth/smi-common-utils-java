@@ -274,9 +274,8 @@ public final class XsltUtils {
 
         // Set parameters
         if (parameters != null) {
-            for (String paramName : parameters.keySet()) {
-                String paramValue = parameters.get(paramName);
-                transformer.setParameter(paramName, paramValue);
+            for (Map.Entry<String, String> entry : parameters.entrySet()) {
+                transformer.setParameter(entry.getKey(), entry.getValue());
             }
         }
 
