@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.xml.namespace.NamespaceContext;
 
@@ -31,33 +32,21 @@ class MappedNamespaceContext implements NamespaceContext {
         this.nsMap = nsMap;
     }
 
-    /**
-     * @see NamespaceContext#getNamespaceURI(String)
-     */
     @Override
     public String getNamespaceURI(String prefix) {
         return this.nsMap.get(prefix);
     }
 
-    /**
-     * @see NamespaceContext#getPrefix(String)
-     */
     @Override
     public String getPrefix(String namespaceURI) {
-        String prefix = null;
-        for (String currPrefix : this.nsMap.keySet()) {
-            String currNsUri = this.nsMap.get(currPrefix);
-            if (currNsUri.equals(namespaceURI)) {
-                prefix = currPrefix;
-                break;
+        for (Map.Entry<String, String> entry : this.nsMap.entrySet()) {
+            if (Objects.equals(entry.getValue(), namespaceURI)) {
+                return entry.getKey();
             }
         }
-        return prefix;
+        return null;
     }
 
-    /**
-     * @see NamespaceContext#getPrefixes(String)
-     */
     @Override
     public Iterator<String> getPrefixes(String namespaceURI) {
         List<String> prefixList = new ArrayList<>();

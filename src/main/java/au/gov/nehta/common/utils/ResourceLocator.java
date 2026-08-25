@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -24,12 +23,9 @@ public class ResourceLocator {
 
     }
 
-    private static final List<SearchOrderItem> DEFAULT_SEARCH_ORDER = Arrays
-            .asList(SearchOrderItem.FILE_SYSTEM, SearchOrderItem.CLASSPATH);
+    private static final List<SearchOrderItem> DEFAULT_SEARCH_ORDER = List.of(
+            SearchOrderItem.FILE_SYSTEM, SearchOrderItem.CLASSPATH);
 
-    /*
-     * Singleton instance.
-     */
     private static final ResourceLocator instance = new ResourceLocator();
 
     /**
@@ -41,9 +37,6 @@ public class ResourceLocator {
         return instance;
     }
 
-    /*
-     * Private constructor to prevent instantiation.
-     */
     private ResourceLocator() {
     }
 
@@ -67,7 +60,7 @@ public class ResourceLocator {
      *                       provided.
      * @return byte stream to the resource or null if it cannot be found.
      */
-    public InputStream find(String resourcePath, Class referenceClass) {
+    public InputStream find(String resourcePath, Class<?> referenceClass) {
         return find(resourcePath, referenceClass, DEFAULT_SEARCH_ORDER);
     }
 
@@ -100,10 +93,10 @@ public class ResourceLocator {
      *                       the classpath.
      * @return byte stream to the resource or null if it cannot be found.
      */
-    public InputStream find(String resourcePath, Class referenceClass,
+    public InputStream find(String resourcePath, Class<?> referenceClass,
                             List<SearchOrderItem> searchOrder) {
         assert (resourcePath != null) : "'resourcePath' is null.";
-        assert (resourcePath.trim().length() > 0) : "'resourcePath' is a blank string.";
+        assert (!resourcePath.trim().isEmpty()) : "'resourcePath' is a blank string.";
 
         List<SearchOrderItem> actualSearchOrder = searchOrder;
         if (ArgumentUtils.isNullOrEmpty(searchOrder)) {
@@ -113,16 +106,13 @@ public class ResourceLocator {
         for (SearchOrderItem currSearchOrderItem : actualSearchOrder) {
             if (currSearchOrderItem == SearchOrderItem.FILE_SYSTEM) {
                 try {
-                    // Found in file system
                     return new FileInputStream(resourcePath);
-
                 } catch (FileNotFoundException e) {
                     // Resource can't be found in file system; keep looking
                 }
             } else if (currSearchOrderItem == SearchOrderItem.CLASSPATH) {
                 InputStream in = getStreamFromClasspath(resourcePath, referenceClass);
                 if (in != null) {
-                    // Found in class path
                     return in;
                 }
             } else if (currSearchOrderItem == SearchOrderItem.REMOTE_URL) {
@@ -161,12 +151,10 @@ public class ResourceLocator {
      * @return byte stream to the resource or null if it cannot be found.
      */
     public InputStream getStreamFromClasspath(String resourcePath,
-                                              Class referenceClass) {
+                                              Class<?> referenceClass) {
         assert (resourcePath != null) : "'resourcePath' is null.";
-        assert (resourcePath.trim().length() > 0) : "'resourcePath' is a blank string.";
+        assert (!resourcePath.trim().isEmpty()) : "'resourcePath' is a blank string.";
 
-        // Note: referenceClass.getResourceAsStream(resourcePath) returns null as of
-        // JDK 1.6. This is the reason why resources are read from the class loader.
         ClassLoader classLoader = getClassLoader(referenceClass);
         return classLoader.getResourceAsStream(resourcePath);
     }
@@ -192,27 +180,21 @@ public class ResourceLocator {
      *                       provided.
      * @return URL to the resource or null if it cannot be found.
      */
-    public URL getUrlFromClasspath(String resourcePath, Class referenceClass) {
+    public URL getUrlFromClasspath(String resourcePath, Class<?> referenceClass) {
         assert (resourcePath != null) : "'resourcePath' is null.";
-        assert (resourcePath.trim().length() > 0) : "'resourcePath' is a blank string.";
+        assert (!resourcePath.trim().isEmpty()) : "'resourcePath' is a blank string.";
 
-        // Note: referenceClass.getResourceAsStream(resourcePath) returns null as of
-        // JDK 1.6. This is the reason why resources are read from the class loader.
         ClassLoader classLoader = getClassLoader(referenceClass);
         return classLoader.getResource(resourcePath);
     }
 
-    private ClassLoader getClassLoader(Class referenceClass) {
+    private ClassLoader getClassLoader(Class<?> referenceClass) {
         ClassLoader classLoader = null;
 
-        // Try to get class loader from reference class
         if (referenceClass != null) {
             classLoader = referenceClass.getClassLoader();
         }
 
-        // Use system class loader if reference class is null or the reference
-        // class's class loader is null (Some implementations use null to represent
-        // the bootstrap class loader in the getClassLoader() method).
         if (classLoader == null) {
             classLoader = ClassLoader.getSystemClassLoader();
         }

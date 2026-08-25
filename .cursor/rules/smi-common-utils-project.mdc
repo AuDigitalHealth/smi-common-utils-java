@@ -1,0 +1,38 @@
+# smi-common-utils-java
+
+Maven artifact **`au.gov.nehta:smi-common-utils`** - Java utility classes to assist with CDA library development. **Not** facade clients or HI/MHR services.
+
+## Documentation
+
+Follow **`documentation-standards.mdc`**. Integrator docs use **version numbers** - not Git branch names.
+
+The **first number** of the Maven version is the **Java SE** target.
+
+| Version    | Java | Logging                            |
+| ---------- | ---- | ---------------------------------- |
+| **8.0.0**  | 8    | **SLF4J 1.7.x** (javax-compatible) |
+| **11.0.0** | 11   | **SLF4J 2.0.18**                   |
+
+**Git branch mapping (maintainers only - never in integrator docs):**
+
+| Version    | Official Git branch |
+| ---------- | ------------------- |
+| **8.0.0**  | `java-8`            |
+| **11.0.0** | `java-11`           |
+
+## This 11.0.0 line
+
+**`11.0.0-SNAPSHOT`**: Java **11**, SLF4J **2.0.18**. No JAX-WS dependencies.
+
+## Build
+
+- JDK **11+**, from repo root: `mvn -B "-Dgpg.skip=true" clean verify` (quote `-D` on PowerShell).
+- Default Surefire: all tests.
+- **`-Pcoverage`**: JaCoCo report.
+
+## Doc split
+
+- **`documentation-standards.mdc`**: implementor-first, Maven Central default, local/OS sections, relative paths, no secrets
+- **`README.md`**: integrators (Maven Central default)
+- **`CONTRIBUTING.md`**: build from source, local SNAPSHOT
+- **`MAINTAINERS.md`**: POM internals
