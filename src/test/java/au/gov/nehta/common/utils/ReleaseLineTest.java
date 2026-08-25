@@ -20,24 +20,24 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Locks this artifact on the Java 21 / 21.0.0 release line.
+ * Locks this artifact on the Java 24 / 24.0.0 release line.
  */
 public class ReleaseLineTest {
 
     @Test
-    public void runtimeFeatureIsAtLeast21() {
-        assertTrue(Runtime.version().feature() >= 21);
+    public void runtimeFeatureIsAtLeast24() {
+        assertTrue(Runtime.version().feature() >= 24);
     }
 
     @Test
-    public void mavenCompilerReleaseIs21() {
-        assertEquals("21", System.getProperty("smi.common.utils.compiler.release"));
+    public void mavenCompilerReleaseIs24() {
+        assertEquals("24", System.getProperty("smi.common.utils.compiler.release"));
     }
 
     @Test
-    public void projectVersionStartsWith21() {
+    public void projectVersionStartsWith24() {
         String version = System.getProperty("smi.common.utils.project.version");
         assertNotNull(version);
-        assertTrue(version.startsWith("21."));
+        assertTrue(version.startsWith("24."));
     }
 }

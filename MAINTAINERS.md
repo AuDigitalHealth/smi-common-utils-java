@@ -12,6 +12,7 @@
 | **11.0.0** | 11 / Jakarta | `java-11` |
 | **17.0.0** | 17 / Jakarta | `java-17` |
 | **21.0.0** | 21 / Jakarta | `java-21` |
+| **24.0.0** | 24 / Jakarta | `java-24` |
 
 ## Key dependency
 
@@ -23,7 +24,7 @@ To update: change `slf4j.version` in `pom.xml` properties, run `mvn verify`.
 
 ## Release process
 
-1. Ensure `java-21` branch is green.
+1. Ensure `java-24` branch is green.
 2. `mvn -B release:prepare release:perform -Prelease` (GPG key required).
 3. Sonatype Central Portal auto-publishes after closing.
 

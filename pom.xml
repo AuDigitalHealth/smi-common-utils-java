@@ -9,7 +9,7 @@
 
     <groupId>au.gov.nehta</groupId>
     <artifactId>smi-common-utils</artifactId>
-    <version>21.0.0-SNAPSHOT</version>
+    <version>24.0.0-SNAPSHOT</version>
     <name>SMI Common Utils</name>
     <description>Java classes to assist with CDA library development</description>
     <url>https://github.com/AuDigitalHealth/smi-common-utils-java</url>
@@ -65,7 +65,7 @@
     </distributionManagement>
 
     <properties>
-        <maven.compiler.release>21</maven.compiler.release>
+        <maven.compiler.release>24</maven.compiler.release>
         <encoding>UTF-8</encoding>
         <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
@@ -83,7 +83,7 @@
         <release.pushChanges>true</release.pushChanges>
         <release.remoteTagging>true</release.remoteTagging>
         <release.scmCommentPrefix>[maven-release-plugin] </release.scmCommentPrefix>
-        <!-- SLF4J 2.x for Java 21. -->
+        <!-- SLF4J 2.x for Java 24. -->
         <slf4j.version>2.0.18</slf4j.version>
         <jakarta.xml.bind.api.version>4.0.5</jakarta.xml.bind.api.version>
         <junit.version>4.13.2</junit.version>

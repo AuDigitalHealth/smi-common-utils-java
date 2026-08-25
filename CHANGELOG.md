@@ -1,5 +1,12 @@
 # Changelog
 
+## 24.0.0
+
+- Java 24 release line (`maven.compiler.release=24`)
+- Jakarta XML Bind API 4.0.5
+- SLF4J 2.0.18
+- Same utility surface as 21.0.0 on Java 24 bytecode
+
 ## 21.0.0
 
 - Java 21 release line (`maven.compiler.release=21`)

@@ -8,13 +8,13 @@ Java utility classes to assist with CDA library development for the Australian D
 <dependency>
     <groupId>au.gov.nehta</groupId>
     <artifactId>smi-common-utils</artifactId>
-    <version>21.0.0</version>
+    <version>24.0.0</version>
 </dependency>
 ```
 
 ## Runtime requirements
 
-- Java 21 or later
+- Java 24 or later
 - SLF4J 2.0.18 API is a compile dependency; include an SLF4J binding on your classpath at runtime
 
 ## Versioning
@@ -25,6 +25,7 @@ Java utility classes to assist with CDA library development for the Australian D
 | **11.0.0** | 11   | SLF4J 2.0.18 |
 | **17.0.0** | 17   | SLF4J 2.0.18 |
 | **21.0.0** | 21   | SLF4J 2.0.18 |
+| **24.0.0** | 24   | SLF4J 2.0.18 |
 
 ## Building from source
 
