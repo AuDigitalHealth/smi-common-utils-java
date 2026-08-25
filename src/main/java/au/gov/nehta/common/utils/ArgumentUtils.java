@@ -1,6 +1,7 @@
 package au.gov.nehta.common.utils;
 
 import java.util.Collection;
+import java.util.Objects;
 
 
 /**
@@ -48,11 +49,11 @@ public final class ArgumentUtils {
      * @throws NullPointerException     If the collection argument is null.
      * @throws IllegalArgumentException If the collection argument does not contain at least one item.
      */
-    public static void checkNotNullNorEmpty(Collection collection, String name) {
+    public static void checkNotNullNorEmpty(Collection<?> collection, String name) {
         assert (name != null) : "'name' is null.";
 
         checkNotNull(collection, name);
-        if (collection.size() == 0) {
+        if (collection.isEmpty()) {
             throw new IllegalArgumentException(name
                     + " must contain at least one item.");
         }
@@ -72,22 +73,22 @@ public final class ArgumentUtils {
         assert (name != null) : "'name' is null.";
 
         checkNotNull(value, name);
-        if ((value.length() == 0) || (value.trim().length() == 0)) {
+        if (value.isEmpty() || value.trim().isEmpty()) {
             throw new IllegalArgumentException(name + " cannot be a blank string.");
         }
     }
 
     /**
-     * Check that an argument is blank (null or empty string).
+     * Check that an argument is blank (null, empty, or whitespace-only after trim).
      *
      * @param value Value of the string argument to check.
      * @param name  Name of the string argument.
-     * @throws IllegalArgumentException If the value argument is not null or an empty string.
+     * @throws IllegalArgumentException If the value argument is not blank.
      */
     public static void checkNullOrBlank(String value, String name) {
         assert (name != null) : "'name' is null.";
 
-        if ((value != null) && (value.trim().length() > 0)) {
+        if ((value != null) && !value.trim().isEmpty()) {
             throw new IllegalArgumentException("A value is not permitted for " + name
                     + ".");
         }
@@ -115,20 +116,20 @@ public final class ArgumentUtils {
      * Checks if a collection argument is null or has no items.
      *
      * @param collection collection to check.
-     * @return true if collection is collection is null or has no items.
+     * @return true if collection is null or has no items.
      */
-    public static boolean isNullOrEmpty(Collection collection) {
-        return ((collection == null) || (collection.size() == 0));
+    public static boolean isNullOrEmpty(Collection<?> collection) {
+        return ((collection == null) || collection.isEmpty());
     }
 
     /**
      * Checks if a string argument is null or has no non-whitespace characters.
      *
      * @param value string value to check.
-     * @return true if collection is collection is null or has no items.
+     * @return true if value is null, empty, or whitespace-only after trim.
      */
     public static boolean isNullOrBlank(String value) {
-        return ((value == null) || (value.length() == 0) || (value.trim().length() == 0));
+        return ((value == null) || value.isEmpty() || value.trim().isEmpty());
     }
 
     /**
@@ -140,11 +141,7 @@ public final class ArgumentUtils {
      * returns true.
      */
     public static boolean isEqual(Object value1, Object value2) {
-        if (value1 == null) {
-            return (value2 == null);
-        } else {
-            return value2 != null && value1.equals(value2);
-        }
+        return Objects.equals(value1, value2);
     }
 
     /*

@@ -21,6 +21,7 @@ import org.w3c.dom.ls.LSResourceResolver;
 
 public abstract class SimpleXsdResourceResolver implements LSResourceResolver {
 
+    @Override
     public LSInput resolveResource(String type, String namespaceURI,
                                    String publicId, String systemId, String baseURI) {
         if (!ArgumentUtils.isNullOrBlank(systemId)) {
