@@ -56,7 +56,7 @@ public final class XsdUtils {
         Node dataNode = DomUtils.parse(dataFile);
         Node schemaNode = DomUtils.parse(schemaFile);
 
-        validate(dataNode, schemaNode, new XsdUtils().new FileXsdResourceResolver(
+        validate(dataNode, schemaNode, new FileXsdResourceResolver(
                 schemaFile.getParentFile()));
     }
 
@@ -120,11 +120,11 @@ public final class XsdUtils {
     private XsdUtils() {
     }
 
-    private class FileXsdResourceResolver extends SimpleXsdResourceResolver {
+    private static final class FileXsdResourceResolver extends SimpleXsdResourceResolver {
 
-        private File baseDir;
+        private final File baseDir;
 
-        public FileXsdResourceResolver(File baseDir) {
+        private FileXsdResourceResolver(File baseDir) {
             this.baseDir = baseDir;
         }
 

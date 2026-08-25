@@ -26,6 +26,6 @@ public final class UriUtils {
      * @return A randomly generated URI.
      */
     public static String randomUri() {
-        return "urn:uuid:" + UUID.randomUUID().toString();
+        return "urn:uuid:" + UUID.randomUUID();
     }
 }

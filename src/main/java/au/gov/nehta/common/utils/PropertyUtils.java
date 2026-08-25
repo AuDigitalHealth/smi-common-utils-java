@@ -12,12 +12,13 @@ package au.gov.nehta.common.utils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
-import java.util.Arrays;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.List;
+import java.util.Locale;
 import java.util.Properties;
 
 /**
@@ -28,8 +29,7 @@ public final class PropertyUtils {
     /*
      * Text that will be accepted as a 'true' boolean value.
      */
-    private static final List<String> TRUE_VALUES = Arrays.asList("true", "yes",
-            "on", "1");
+    private static final List<String> TRUE_VALUES = List.of("true", "yes", "on", "1");
 
     /**
      * Gets the value of the system property with the given name, throwing an
@@ -41,7 +41,7 @@ public final class PropertyUtils {
      */
     public static String getSystemProperty(String name) {
         assert (name != null) : "'name' is null.";
-        assert (name.trim().length() > 0) : "'name' is a blank string.";
+        assert (!name.trim().isEmpty()) : "'name' is a blank string.";
 
         String value = System.getProperty(name);
         if (value == null) {
@@ -61,7 +61,7 @@ public final class PropertyUtils {
      */
     public static String getSystemProperty(String name, String defaultValue) {
         assert (name != null) : "'name' is null.";
-        assert (name.trim().length() > 0) : "'name' is a blank string.";
+        assert (!name.trim().isEmpty()) : "'name' is a blank string.";
 
         return System.getProperty(name, defaultValue);
     }
@@ -74,14 +74,14 @@ public final class PropertyUtils {
      */
     public static void setSystemProperty(String name, String value) {
         assert (name != null) : "'name' is null.";
-        assert (name.trim().length() > 0) : "'name' is a blank string.";
+        assert (!name.trim().isEmpty()) : "'name' is a blank string.";
         assert (value != null) : "'value' is null.";
 
         System.setProperty(name, value);
     }
 
     /**
-     * Load the properties from the given file.
+     * Load the properties from the given file (UTF-8).
      *
      * @param file Path to properties file.
      * @return The properties loaded from the properties file.
@@ -92,7 +92,9 @@ public final class PropertyUtils {
             throws FileNotFoundException, IOException {
         assert (file != null) : "'file' is null.";
 
-        return loadProperties(new FileReader(file));
+        try (Reader reader = Files.newBufferedReader(file.toPath(), StandardCharsets.UTF_8)) {
+            return loadProperties(reader);
+        }
     }
 
     /**
@@ -140,7 +142,7 @@ public final class PropertyUtils {
                                              boolean defaultValue) {
         assert (properties != null) : "'properties' is null.";
         assert (name != null) : "'name' is null.";
-        assert (name.trim().length() > 0) : "'name' is a blank string.";
+        assert (!name.trim().isEmpty()) : "'name' is a blank string.";
 
         // Retrieve property value from properties object
         String propertyValue = properties.getProperty(name);
@@ -151,7 +153,7 @@ public final class PropertyUtils {
         }
 
         // Remove leading and trailing whitespaces and convert to lower case
-        propertyValue = propertyValue.trim().toLowerCase();
+        propertyValue = propertyValue.trim().toLowerCase(Locale.ROOT);
 
         // Check if the property value matches any of the acceptable 'true' values
         return TRUE_VALUES.contains(propertyValue);
