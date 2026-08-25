@@ -12,6 +12,8 @@ The **first number** of the Maven version is the **Java SE** target.
 | ---------- | ---- | ---------------------------------- |
 | **8.0.0**  | 8    | **SLF4J 1.7.x** (javax-compatible) |
 | **11.0.0** | 11   | **SLF4J 2.0.18**                   |
+| **17.0.0** | 17   | **SLF4J 2.0.18**                   |
+| **21.0.0** | 21   | **SLF4J 2.0.18**                   |
 
 **Git branch mapping (maintainers only - never in integrator docs):**
 
@@ -19,14 +21,16 @@ The **first number** of the Maven version is the **Java SE** target.
 | ---------- | ------------------- |
 | **8.0.0**  | `java-8`            |
 | **11.0.0** | `java-11`           |
+| **17.0.0** | `java-17`           |
+| **21.0.0** | `java-21`           |
 
-## This 11.0.0 line
+## This 21.0.0 line
 
-**`11.0.0-SNAPSHOT`**: Java **11**, SLF4J **2.0.18**. No JAX-WS dependencies.
+**`21.0.0-SNAPSHOT`**: Java **21**, SLF4J **2.0.18**. No JAX-WS dependencies.
 
 ## Build
 
-- JDK **11+**, from repo root: `mvn -B "-Dgpg.skip=true" clean verify` (quote `-D` on PowerShell).
+- JDK **21+**, from repo root: `mvn -B "-Dgpg.skip=true" clean verify` (quote `-D` on PowerShell).
 - Default Surefire: all tests.
 - **`-Pcoverage`**: JaCoCo report.
 
