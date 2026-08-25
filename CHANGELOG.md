@@ -1,5 +1,12 @@
 # Changelog
 
+## 17.0.0
+
+- Java 17 release line (`maven.compiler.release=17`)
+- Jakarta XML Bind API 4.0.5
+- SLF4J 2.0.18
+- Same utility surface as 11.0.0 on Java 17 bytecode
+
 ## 11.0.0
 
 - Java 11 release line (`maven.compiler.release=11`)
