@@ -1,30 +1,34 @@
-# SMI Common Utils Library
+# smi-common-utils - SMI Common Utilities
 
-This is a collection of utility classes helpful for CDA libraries.
+Java utility classes to assist with CDA library development for the Australian Digital Health Agency.
 
-Building and running the code
-=============================
+## Dependency (Maven Central)
 
-The project is supplied with a Maven pom.xml file. Use Maven to build the code.
+```xml
+<dependency>
+    <groupId>au.gov.nehta</groupId>
+    <artifactId>smi-common-utils</artifactId>
+    <version>8.0.0</version>
+</dependency>
+```
 
-Source code
-===========
+## Runtime requirements
 
-The source code is the src/main/java directory structure.
+- Java 8 or later
+- SLF4J API is a compile dependency; include an SLF4J binding on your classpath at runtime
 
-Licensing
-=========
+## Building from source
 
-Copyright 2009 NEHTA
+See **CONTRIBUTING.md**.
 
-Copyright 2021 ADHA
+## Local development
 
-Licensed under the NEHTA/ADHA Open Source (Apache) License; you may not use this
-file except in compliance with the License. A copy of the License is in the
-'LICENSE.txt' file, which should be provided with this work.
+See **CONTRIBUTING.md** - Local builds section.
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-License for the specific language governing permissions and limitations
-under the License.
+## License
+
+Apache License 2.0 - see **LICENSE.txt**.
+
+## Copyright
+
+Copyright 2009 NEHTA. Copyright 2021-2026 ADHA. Apache License 2.0 - see **LICENSE.txt**.
