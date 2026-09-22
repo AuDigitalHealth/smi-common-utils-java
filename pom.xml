@@ -9,7 +9,7 @@
 
     <groupId>au.gov.nehta</groupId>
     <artifactId>smi-common-utils</artifactId>
-    <version>8.0.0-SNAPSHOT</version>
+    <version>8.0.1-SNAPSHOT</version>
     <name>SMI Common Utils</name>
     <description>Java classes to assist with CDA library development</description>
     <url>https://github.com/AuDigitalHealth/smi-common-utils-java</url>
